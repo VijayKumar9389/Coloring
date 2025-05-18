@@ -1,6 +1,6 @@
-// src/components/ColorPicker.tsx
+// src/pages/ColorPicker.tsx
 import { Grid, Button } from '@mui/material';
-import { COLORS, type RGBA, toRGBA, colorMatch} from "../utils.ts";
+import { COLORS, type RGBA, toRGBA, colorMatch} from "../pages/Coloring/utils.ts";
 
 interface ColorPickerProps {
     selectedColor: RGBA;
@@ -8,9 +8,9 @@ interface ColorPickerProps {
 }
 
 const ColorPicker = ({ selectedColor, setSelectedColor }: ColorPickerProps) => (
-    <Grid container spacing={2} justifyContent="center" sx={{ backgroundColor: '#f9f9f9', p: 2, borderRadius: 2 }}>
+    <Grid container spacing={2} justifyContent="center" sx={{ backgroundColor: '#f0f0f0', p: 2, borderRadius: 2 }}>
         {COLORS.map(({ name, color }) => (
-            <Grid item key={name}>
+            <Grid key={name}>
                 <Button
                     onClick={() => setSelectedColor(color)}
                     disableRipple

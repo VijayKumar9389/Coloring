@@ -1,13 +1,13 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import Plane from '../../assets/Plane.gif';
 import Mandala from '../../assets/Mandala.gif';
 import { COLORS } from './utils';
 
-import useTimer from './hooks/useTimer';
+import useTimer from '../../hooks/useTimer.ts';
 import useImageLoader from './hooks/useImageLoader';
 import useCanvasColoring from "./hooks/useColoringCanvas.ts";
-import ColorPicker from './components/ColorPicker.tsx';
+import ColorPicker from '../../components/ColorPicker.tsx';
 
 // Add more images here if you have more
 const IMAGES = [Plane, Mandala];
@@ -18,7 +18,7 @@ const Coloring = () => {
     const { seconds, stopTimer } = useTimer(true);
 
     // Pick a random image on mount
-    const [image, setImage] = useState<string>(() => {
+    const [image] = useState<string>(() => {
         const randomIndex = Math.floor(Math.random() * IMAGES.length);
         return IMAGES[randomIndex];
     });
