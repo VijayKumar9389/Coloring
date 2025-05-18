@@ -19,22 +19,26 @@ const useDrawingCanvas = (
      * Preserves existing image data and resets drawing settings.
      */
     const resizeCanvas = (canvas: HTMLCanvasElement) => {
-        const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Set CSS size
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        // Set drawing buffer size
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-        // Apply CSS size and scale up the internal resolution for crispness
-        canvas.style.width = `${rect.width}px`;
-        canvas.style.height = `${rect.height}px`;
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+        // Scale for high DPI
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(dpr, dpr);
 
-        // Restore image and set default drawing style
-        ctx.putImageData(imgData, 0, 0);
+        // Set drawing styles
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
         ctx.lineWidth = 5;
@@ -49,7 +53,7 @@ const useDrawingCanvas = (
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        resizeCanvas(canvas);
+        resizeCanvas(canvas); // Initial resize
 
         const handleResize = () => resizeCanvas(canvas);
         window.addEventListener('resize', handleResize);
@@ -70,19 +74,17 @@ const useDrawingCanvas = (
         const getPointerPos = (e: MouseEvent | TouchEvent) => {
             const rect = canvas.getBoundingClientRect();
             const dpr = window.devicePixelRatio || 1;
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
 
             const clientX = 'touches' in e ? e.touches[0]?.clientX : (e as MouseEvent).clientX;
             const clientY = 'touches' in e ? e.touches[0]?.clientY : (e as MouseEvent).clientY;
 
             return {
-                x: (clientX - rect.left) * scaleX / dpr,
-                y: (clientY - rect.top) * scaleY / dpr,
+                x: (clientX - rect.left) * (canvas.width / rect.width) / dpr,
+                y: (clientY - rect.top) * (canvas.height / rect.height) / dpr,
             };
         };
 
-        // Event handlers for starting, moving, and ending drawing
+        // Start drawing
         const handleStart = (e: MouseEvent | TouchEvent) => {
             if (!ctxRef.current) return;
 
@@ -94,7 +96,7 @@ const useDrawingCanvas = (
             ctxRef.current.moveTo(x, y);
         };
 
-        // Event handlers for drawing
+        // Continue drawing
         const handleMove = (e: MouseEvent | TouchEvent) => {
             if (!drawing.current || !ctxRef.current) return;
             e.preventDefault(); // Prevent scrolling on touch devices
@@ -104,7 +106,7 @@ const useDrawingCanvas = (
             ctxRef.current.stroke();
         };
 
-        // Event handler for ending drawing
+        // Stop drawing
         const handleEnd = () => {
             drawing.current = false;
         };

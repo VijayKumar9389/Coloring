@@ -56,11 +56,10 @@ const Drawing = () => {
             <canvas
                 ref={canvasRef}
                 style={{
-                    width: '100%',
-                    height: '60vh',
+                    maxWidth: '100%',
+                    maxHeight: '60vh',
                     border: '1px solid #ccc',
                     borderRadius: '8px',
-                    cursor: 'crosshair',
                 }}
             />
 
