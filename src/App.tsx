@@ -1,14 +1,14 @@
 import {
     Container,
 } from "@mui/material";
-import Coloring from "./components/Coloring/Coloring.tsx";
+import Coloring from "./components/Coloring/index.tsx";
 
 
 
 function App() {
 
     return (
-        <Container maxWidth="md" sx={{mt: 4}}>
+        <Container sx={{width: '100%', height: '100%'}}>
             <Coloring />
         </Container>
     );
