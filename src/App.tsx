@@ -2,10 +2,12 @@ import { Container, Card, CardActionArea, CardContent, Typography, Grid } from "
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Coloring from "./pages/Coloring/index.tsx";
 import Drawing from "./pages/Drawing";
+import AnimatedPicture from "./pages/AnimatedPicture/AnimatedPicture.tsx";
 
 const activities = [
     { label: "Coloring", path: "/coloring", description: "Create and customize colors" },
     { label: "Drawing", path: "/drawing", description: "Draw freely on canvas" },
+    { label: "Animated Picture", path: "/animated-picture", description: "Touch picture to make parts fall" },
 ];
 
 const ActivitySelector = () => {
@@ -46,6 +48,9 @@ function App() {
                     {/* Routes for activities */}
                     <Route path="/coloring" element={<Coloring />} />
                     <Route path="/drawing" element={<Drawing />} />
+                    <Route path="/animated-picture" element={<AnimatedPicture />} />
+
+                    {/* Redirect to home if no match */}
 
                     {/* Redirect unknown routes to home */}
                     <Route path="*" element={<ActivitySelector />} />
