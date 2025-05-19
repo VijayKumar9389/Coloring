@@ -12,14 +12,14 @@ type Petal = {
 
 // Initial petals arranged around the flower
 const initialPetals: Petal[] = [
-    { id: 1, cx: 100, cy: 30, rotate: 0, color: '#ff5eaa' },
-    { id: 2, cx: 140, cy: 60, rotate: 45, color: '#ff8ed4' },
+    { id: 1, cx: 100, cy: 50, rotate: 0, color: '#ff5eaa' },
+    { id: 2, cx: 140, cy: 65, rotate: 45, color: '#ff8ed4' },
     { id: 3, cx: 160, cy: 110, rotate: 90, color: '#ffa6de' },
-    { id: 4, cx: 140, cy: 160, rotate: 135, color: '#ff8ed4' },
-    { id: 5, cx: 100, cy: 190, rotate: 180, color: '#ff5eaa' },
-    { id: 6, cx: 60, cy: 160, rotate: 225, color: '#ff8ed4' },
+    { id: 4, cx: 140, cy: 155, rotate: 135, color: '#ff8ed4' },
+    { id: 5, cx: 100, cy: 170, rotate: 180, color: '#ff5eaa' },
+    { id: 6, cx: 60, cy: 155, rotate: 225, color: '#ff8ed4' },
     { id: 7, cx: 40, cy: 110, rotate: 270, color: '#ffa6de' },
-    { id: 8, cx: 60, cy: 60, rotate: 315, color: '#ff8ed4' },
+    { id: 8, cx: 60, cy: 65, rotate: 315, color: '#ff8ed4' },
 ];
 
 const AnimatedPicture: React.FC = () => {
@@ -56,6 +56,7 @@ const AnimatedPicture: React.FC = () => {
 
     // Handle petal click event: initiate the falling animation
     const handlePetalClick = (petal: Petal) => {
+        // Check if SVG reference is available
         if (!svgRef.current) return;
 
         // Use requestAnimationFrame for smooth position calculation before state updates
@@ -98,8 +99,8 @@ const AnimatedPicture: React.FC = () => {
         <Box
             sx={{
                 position: 'relative',
-                width: '100vw',
-                height: '100vh',
+                width: '100%',
+                height: '100%',
                 overflow: 'visible',
                 display: 'flex',
                 justifyContent: 'center',
@@ -110,7 +111,7 @@ const AnimatedPicture: React.FC = () => {
             {/* Flower SVG with petals still attached */}
             <svg
                 ref={svgRef}
-                viewBox="0 -20 200 260"
+                viewBox="-10 -20 220 260"
                 preserveAspectRatio="xMidYMid meet"
                 style={{
                     width: 'min(60vw, 60vh)',
